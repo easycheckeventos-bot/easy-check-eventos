@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+  <div class="topline">
+    <h2>Admin • Convidados</h2>
+    <div class="chips">
+      <a class="chip" href="/dashboard">Dashboard</a>
+      <a class="chip" href="/protocolo">Protocolo</a>
+    </div>
+  </div>
+
+  <h3 style="margin-top:14px;">Adicionar manual</h3>
+  <form method="POST" action="/admin/add" class="search" style="flex-wrap:wrap;">
+    <input class="input" name="nome" placeholder="Nome completo" style="min-width:260px;" required>
+
+    <select class="input" name="mesa" required style="max-width:200px;">
+      <option value="" disabled selected>Mesa</option>
+      {% for m in mesas %}
+        <option value="{{m}}">{{m}}</option>
+      {% endfor %}
+    </select>
+
+    <select class="input" name="acompanhante" required style="max-width:200px;">
+      <option value="Não">Acompanhante: Não</option>
+      <option value="Sim">Acompanhante: Sim</option>
+    </select>
+
+    <button class="btn" type="submit">Adicionar</button>
+  </form>
+
+  <hr style="margin:18px 0; border:none; border-top:1px solid rgba(11,27,43,.10);">
+
+  <h3>Importar CSV</h3>
+  <p class="muted small">O CSV deve ter cabeçalho: <b>nome,mesa,acompanhante</b>. (Mesa deve ser Laranja/Manga/Papaia/Maracuja)</p>
+
+  <form method="POST" action="/admin/import" enctype="multipart/form-data" class="search">
+    <input class="input" type="file" name="arquivo" accept=".csv" required>
+    <button class="btn" type="submit">Importar</button>
+  </form>
+</div>
+
+{% endblock %}
