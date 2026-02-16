@@ -6,3 +6,4 @@ venv/
 .idea/
 easycheck.db
 static/qrcodes/
+*.csv
