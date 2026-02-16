@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card">
+
+{% if convidado %}
+<h2>{{ convidado[1] }}</h2>
+
+<p>Mesa: {{ convidado[2] }}</p>
+<p>Acompanhante: {{ convidado[3] }}</p>
+<p>Entrou: {{ convidado[4] }}</p>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

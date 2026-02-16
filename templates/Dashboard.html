@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+  <div class="topline">
+    <h2>Dashboard</h2>
+    <div class="chips">
+      <a class="chip" href="{{ url_for('protocolo') }}">Protocolo</a>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-label">Total convidados</div>
+      <div class="kpi-value">{{ stats.total }}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Já entraram</div>
+      <div class="kpi-value">{{ stats.entrou }}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Faltam</div>
+      <div class="kpi-value">{{ stats.faltam }}</div>
+    </div>
+  </div>
+
+  <div class="hint">
+    Dica: O QR deve apontar para <b>/scan/ID</b> (tela verde/vermelha).
+  </div>
+</div>
+
+{% endblock %}

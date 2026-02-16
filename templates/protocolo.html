@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+  <div class="topline">
+    <h2>Protocolo</h2>
+    <div class="chips">
+      <a class="chip" href="{{ url_for('dashboard') }}">Dashboard</a>
+    </div>
+  </div>
+
+  <form method="POST" class="search">
+    <input name="nome" value="{{ nome }}" placeholder="Pesquisar (ex: Nazimo)" class="input">
+    <button class="btn" type="submit">Buscar</button>
+  </form>
+
+  {% if resultados %}
+    <div class="table">
+      <div class="row head">
+        <div>Nome</div><div>Mesa</div><div>Acomp.</div><div>Entrada</div><div>Scan</div><div>Ação</div>
+      </div>
+
+      {% for c in resultados %}
+        <div class="row">
+          <div class="who">
+            <div class="name">{{ c[1] }}</div>
+            <div class="muted small">ID: {{ c[0] }}</div>
+          </div>
+          <div><b>{{ c[2] }}</b></div>
+          <div>{{ c[3] }}</div>
+          <div>
+            {% if c[4] == "Sim" %}
+              <span class="pill pill-danger">Já entrou</span>
+            {% else %}
+              <span class="pill pill-success">Não entrou</span>
+            {% endif %}
+          </div>
+          <div><a class="link" href="{{ url_for('scan', id=c[0]) }}">Abrir</a></div>
+          <div>
+            {% if c[4] == "Sim" %}
+              <a class="btn btn-ghost" href="{{ url_for('resetar', id=c[0]) }}">Desfazer</a>
+            {% else %}
+              <a class="btn btn-ghost" href="{{ url_for('entrar', id=c[0]) }}">Marcar</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="muted" style="margin-top:14px;">Escreve um nome e clica Buscar.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

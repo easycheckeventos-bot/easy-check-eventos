@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Scan • Easy Check Eventos</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+{% if convidado %}
+  {% set entrou = (convidado[4] == "Sim") %}
+  <body class="{{ 'screen-red' if entrou else 'screen-green' }}">
+    <div class="screen">
+      <div class="screen-badge">
+        {% if entrou %}🔴 JÁ ENTROU{% else %}🟢 VÁLIDO{% endif %}
+      </div>
+
+      <div class="screen-name">{{ convidado[1] }}</div>
+
+      <div class="screen-grid">
+        <div class="screen-box">
+          <div class="screen-label">Mesa</div>
+          <div class="screen-value">{{ convidado[2] }}</div>
+        </div>
+        <div class="screen-box">
+          <div class="screen-label">Acompanhante</div>
+          <div class="screen-value">{{ 'Sim' if convidado[3]=='Sim' else 'Não' }}</div>
+        </div>
+        <div class="screen-box">
+          <div class="screen-label">Status</div>
+          <div class="screen-value">{{ 'Entrou' if entrou else 'Ainda não' }}</div>
+        </div>
+      </div>
+
+      <div class="screen-actions">
+        <a class="btn" href="{{ url_for('protocolo') }}">Ir ao Protocolo</a>
+        {% if entrou %}
+          <a class="btn btn-ghost" href="{{ url_for('resetar', id=convidado[0]) }}">Desfazer entrada</a>
+        {% else %}
+          <a class="btn btn-ghost" href="{{ url_for('entrar', id=convidado[0]) }}">Marcar entrada</a>
+        {% endif %}
+      </div>
+
+      <div class="screen-id">ID: {{ convidado[0] }}</div>
+    </div>
+  </body>
+{% else %}
+  <body class="screen-red">
+    <div class="screen">
+      <div class="screen-badge">🔴 NÃO ENCONTRADO</div>
+      <div class="screen-name">Convite inválido</div>
+      <div class="screen-actions">
+        <a class="btn" href="{{ url_for('protocolo') }}">Ir ao Protocolo</a>
+      </div>
+    </div>
+  </body>
+{% endif %}
+</html>
