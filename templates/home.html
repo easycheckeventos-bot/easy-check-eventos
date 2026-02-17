@@ -1,24 +1,88 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="card hero">
-  <h1>Bem-vindo ao Easy Check Eventos</h1>
-  <p class="muted">Check-in inteligente com QR Code + lista por nome. Feito para eventos modernos.</p>
+<div class="hero card">
+  <div class="hero-left">
+    <div class="brand">
+      <img class="logo" src="{{ url_for('static', filename='logo_ece.png') }}" alt="ECE">
+      <div>
+        <div class="brand-name">Easy Check Eventos</div>
+        <div class="brand-tag">Check-in inteligente com QR • Busca por nome • Dashboard em tempo real</div>
+      </div>
+    </div>
 
-  <div class="chips" style="margin-top:12px;">
-    <a class="chip" href="/dashboard">/dashboard</a>
-    <a class="chip" href="/protocolo">/protocolo</a>
-    <a class="chip" href="/admin">/admin</a>
+    <h1 class="hero-title">Organize o seu evento sem stress.</h1>
+    <p class="hero-sub">QR Code por convidado + protocolo rápido por pesquisa. Funciona online e é perfeito para casamentos e eventos.</p>
+
+    <div class="hero-actions">
+      <a class="btn" href="/protocolo">Abrir Protocolo</a>
+      <a class="btn btn-ghost" href="/dashboard">Ver Dashboard</a>
+      <a class="btn btn-ghost" href="/admin">Área Admin</a>
+    </div>
+
+    <div class="hint">
+      <b>Como usar:</b> importe CSV (Google Sheets) ou adicione manualmente no Admin. Depois gere os QR.
+    </div>
   </div>
 
-  <hr style="margin:18px 0; border:none; border-top:1px solid rgba(11,27,43,.10);">
+  <div class="hero-right">
+    <div class="mini card-in">
+      <div class="mini-title">Caminhos do sistema</div>
+      <div class="paths">
+        <a class="path" href="/dashboard">📊 /dashboard</a>
+        <a class="path" href="/protocolo">🔎 /protocolo</a>
+        <a class="path" href="/admin">🔒 /admin</a>
+      </div>
+    </div>
 
-  <h3>Pacotes</h3>
-  <ul class="muted">
-    <li><b>Básico:</b> QR + Busca por nome + Mesa + Acompanhantes</li>
-    <li><b>Plus:</b> Importação CSV + Admin + Dashboard</li>
-    <li><b>Premium:</b> Personalizações e suporte completo</li>
-  </ul>
+    <div class="mini card-in">
+      <div class="mini-title">O que o protocolo vê</div>
+      <ul class="mini-list">
+        <li>Mesa (tema livre: carros, cores, números…)</li>
+        <li>Acompanhantes (0 a 10)</li>
+        <li>Total de pessoas do convite</li>
+        <li>Status: entrou / não entrou</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="packs">
+  <div class="pack card">
+    <div class="badge">BÁSICO</div>
+    <h3>Check-in QR + Busca</h3>
+    <p class="muted">Para eventos pequenos e médios.</p>
+    <ul class="list">
+      <li>QR por convidado</li>
+      <li>Busca por nome</li>
+      <li>Mesa + acompanhantes</li>
+      <li>Evita entradas duplicadas</li>
+    </ul>
+  </div>
+
+  <div class="pack card">
+    <div class="badge">PLUS</div>
+    <h3>Importação CSV + Admin</h3>
+    <p class="muted">Tu manda a lista e o sistema organiza.</p>
+    <ul class="list">
+      <li>Upload CSV (Sheets)</li>
+      <li>Área admin com senha</li>
+      <li>Dashboard de pessoas</li>
+      <li>Setup rápido</li>
+    </ul>
+  </div>
+
+  <div class="pack card">
+    <div class="badge">PREMIUM</div>
+    <h3>Personalizações</h3>
+    <p class="muted">Para eventos grandes ou exigentes.</p>
+    <ul class="list">
+      <li>Campos extras</li>
+      <li>Layouts/convites</li>
+      <li>Regras especiais</li>
+      <li>Suporte completo</li>
+    </ul>
+  </div>
 </div>
 
 {% endblock %}
