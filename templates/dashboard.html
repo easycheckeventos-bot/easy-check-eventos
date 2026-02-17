@@ -5,27 +5,36 @@
   <div class="topline">
     <h2>Dashboard</h2>
     <div class="chips">
-      <a class="chip" href="{{ url_for('protocolo') }}">Protocolo</a>
+      <a class="chip" href="/">Home</a>
+      <a class="chip" href="/protocolo">Protocolo</a>
+      <a class="chip" href="/admin">Admin</a>
     </div>
   </div>
 
-  <div class="kpis">
-    <div class="kpi">
-      <div class="kpi-label">Total convidados</div>
-      <div class="kpi-value">{{ stats.total }}</div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Convites</div>
+      <div class="stat-value">{{ stats.convites }}</div>
+      <div class="muted small">convidados principais</div>
     </div>
-    <div class="kpi">
-      <div class="kpi-label">Já entraram</div>
-      <div class="kpi-value">{{ stats.entrou }}</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Faltam</div>
-      <div class="kpi-value">{{ stats.faltam }}</div>
-    </div>
-  </div>
 
-  <div class="hint">
-    Dica: O QR deve apontar para <b>/scan/ID</b> (tela verde/vermelha).
+    <div class="stat">
+      <div class="stat-label">Pessoas (Total)</div>
+      <div class="stat-value">{{ stats.total_pessoas }}</div>
+      <div class="muted small">1 + acompanhantes</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Pessoas (Entraram)</div>
+      <div class="stat-value">{{ stats.entraram_pessoas }}</div>
+      <div class="muted small">confirmadas</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Pessoas (Faltam)</div>
+      <div class="stat-value">{{ stats.faltam_pessoas }}</div>
+      <div class="muted small">por chegar</div>
+    </div>
   </div>
 </div>
 

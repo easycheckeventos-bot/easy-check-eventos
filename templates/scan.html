@@ -1,58 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Scan • Easy Check Eventos</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+{% extends "base.html" %}
+{% block content %}
 
-{% if convidado %}
-  {% set entrou = (convidado[4] == "Sim") %}
-  <body class="{{ 'screen-red' if entrou else 'screen-green' }}">
-    <div class="screen">
-      <div class="screen-badge">
-        {% if entrou %}🔴 JÁ ENTROU{% else %}🟢 VÁLIDO{% endif %}
-      </div>
-
-      <div class="screen-name">{{ convidado[1] }}</div>
-
-      <div class="screen-grid">
-        <div class="screen-box">
-          <div class="screen-label">Mesa</div>
-          <div class="screen-value">{{ convidado[2] }}</div>
-        </div>
-        <div class="screen-box">
-          <div class="screen-label">Acompanhante</div>
-          <div class="screen-value">{{ 'Sim' if convidado[3]=='Sim' else 'Não' }}</div>
-        </div>
-        <div class="screen-box">
-          <div class="screen-label">Status</div>
-          <div class="screen-value">{{ 'Entrou' if entrou else 'Ainda não' }}</div>
-        </div>
-      </div>
-
-      <div class="screen-actions">
-        <a class="btn" href="{{ url_for('protocolo') }}">Ir ao Protocolo</a>
-        {% if entrou %}
-          <a class="btn btn-ghost" href="{{ url_for('resetar', id=convidado[0]) }}">Desfazer entrada</a>
-        {% else %}
-          <a class="btn btn-ghost" href="{{ url_for('entrar', id=convidado[0]) }}">Marcar entrada</a>
-        {% endif %}
-      </div>
-
-      <div class="screen-id">ID: {{ convidado[0] }}</div>
+<div class="card">
+  <div class="topline">
+    <h2>Scan</h2>
+    <div class="chips">
+      <a class="chip" href="/">Home</a>
+      <a class="chip" href="/protocolo">Protocolo</a>
     </div>
-  </body>
-{% else %}
-  <body class="screen-red">
-    <div class="screen">
-      <div class="screen-badge">🔴 NÃO ENCONTRADO</div>
-      <div class="screen-name">Convite inválido</div>
-      <div class="screen-actions">
-        <a class="btn" href="{{ url_for('protocolo') }}">Ir ao Protocolo</a>
+  </div>
+
+  {% if convidado %}
+    {% set total = 1 + (convidado[3] or 0) %}
+    <div class="scanbox {% if convidado[4] == 'Sim' %}scan-no{% else %}scan-ok{% endif %}">
+      <div class="scan-title">{{ convidado[1] }}</div>
+      <div class="scan-sub">
+        Mesa: <b>{{ convidado[2] }}</b> • Acompanhantes: <b>{{ convidado[3] }}</b> • Total pessoas: <b>{{ total }}</b>
       </div>
+
+      {% if convidado[4] == "Sim" %}
+        <div class="scan-status">❌ Já entrou</div>
+        <a class="btn btn-ghost" href="/resetar/{{ convidado[0] }}">Resetar</a>
+      {% else %}
+        <div class="scan-status">✅ Válido</div>
+        <a class="btn" href="/entrar/{{ convidado[0] }}">Marcar entrada</a>
+      {% endif %}
     </div>
-  </body>
-{% endif %}
-</html>
+  {% else %}
+    <p class="muted">Convidado não encontrado.</p>
+  {% endif %}
+
+</div>
+
+{% endblock %}

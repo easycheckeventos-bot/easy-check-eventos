@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card hero">
+  <h1>Bem-vindo ao Easy Check Eventos</h1>
+  <p class="muted">Check-in inteligente com QR Code + lista por nome. Feito para eventos modernos.</p>
+
+  <div class="chips" style="margin-top:12px;">
+    <a class="chip" href="/dashboard">/dashboard</a>
+    <a class="chip" href="/protocolo">/protocolo</a>
+    <a class="chip" href="/admin">/admin</a>
+  </div>
+
+  <hr style="margin:18px 0; border:none; border-top:1px solid rgba(11,27,43,.10);">
+
+  <h3>Pacotes</h3>
+  <ul class="muted">
+    <li><b>Básico:</b> QR + Busca por nome + Mesa + Acompanhantes</li>
+    <li><b>Plus:</b> Importação CSV + Admin + Dashboard</li>
+    <li><b>Premium:</b> Personalizações e suporte completo</li>
+  </ul>
+</div>
+
+{% endblock %}
