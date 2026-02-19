@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Protocolo{% endblock %}
 {% block content %}
-
 <div class="card section">
   <div class="section-title">
     <h2>Protocolo</h2>
@@ -31,9 +30,7 @@
 
     {% for p in range(start, end+1) %}
       {% if p == page %}
-        <span class="pill" style="background:rgba(10,108,214,.16); border-color:rgba(10,108,214,.35); font-weight:1000;">
-          {{ p }}
-        </span>
+        <span class="pill" style="background:rgba(10,108,214,.16); border-color:rgba(10,108,214,.35); font-weight:1000;">{{ p }}</span>
       {% else %}
         <a class="pill" href="/protocolo?q={{ q|urlencode }}&page={{ p }}">{{ p }}</a>
       {% endif %}
@@ -70,16 +67,14 @@
         {% else %}
           <a class="btn btn-success" href="/entrar/{{ c.id }}">Marcar entrada</a>
         {% endif %}
+        <a class="btn btn-ghost" href="/qr/{{ c.id }}">Ver QR</a>
       </div>
     </div>
     {% endfor %}
 
     {% if convidados|length == 0 %}
-      <div style="padding:14px; color:var(--muted); font-weight:800;">
-        Nenhum resultado.
-      </div>
+      <div style="padding:14px; color:var(--muted); font-weight:800;">Nenhum resultado.</div>
     {% endif %}
   </div>
 </div>
-
 {% endblock %}

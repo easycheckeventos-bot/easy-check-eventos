@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Confirmar entrada</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="screen-green">
+  <div class="screen">
+    <div class="screen-badge">CONFIRMAR ENTRADA</div>
+    <div class="screen-name">{{ c.nome }}</div>
+
+    <div class="screen-grid">
+      <div class="screen-box">
+        <div class="screen-label">Mesa</div>
+        <div class="screen-value">{{ c.mesa }}</div>
+      </div>
+      <div class="screen-box">
+        <div class="screen-label">Acompanhantes</div>
+        <div class="screen-value">{{ c.acompanhantes }}</div>
+      </div>
+      <div class="screen-box">
+        <div class="screen-label">Total</div>
+        <div class="screen-value">{{ c.total }}</div>
+      </div>
+    </div>
+
+    <form method="POST" action="/scan/{{ c.token }}/confirm">
+      <button class="btn btn-success" type="submit" style="font-size:18px; padding:14px 18px;">
+        Confirmar entrada ✅
+      </button>
+    </form>
+
+    <div class="screen-id">ID: #{{ c.id }}</div>
+  </div>
+</body>
+</html>

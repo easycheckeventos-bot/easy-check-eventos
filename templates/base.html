@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
   <div class="container">
     <div class="topbar">
       <div class="brand">
@@ -17,7 +16,6 @@
           <p>Check-in inteligente com QR + busca por nome</p>
         </div>
       </div>
-
       <div class="nav">
         <a class="pill" href="/">Home</a>
         <a class="pill" href="/protocolo">Protocolo</a>
@@ -26,9 +24,16 @@
       </div>
     </div>
 
+    {% with msgs = get_flashed_messages() %}
+      {% if msgs %}
+        <div class="card section" style="margin-top:14px;">
+          {% for m in msgs %}<div style="font-weight:900;">{{ m }}</div>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     {% block content %}{% endblock %}
     <div class="spacer"></div>
   </div>
-
 </body>
 </html>

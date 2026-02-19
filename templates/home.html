@@ -1,112 +1,16 @@
 {% extends "base.html" %}
+{% block title %}Home{% endblock %}
 {% block content %}
+<div class="card section">
+  <div class="section-title">
+    <h2>Organize o seu evento sem stress.</h2>
+    <p class="hint">QR Code + protocolo + dashboard</p>
+  </div>
 
-<div class="hero-bg" style="background-image:url('{{ url_for('static', filename='hero-bg.png') }}');">
-  <div class="hero-content">
-
-    <div class="topline">
-      <div class="brand">
-        <img src="{{ url_for('static', filename='logo_ece.png') }}" class="logo">
-        <div>
-          <div class="brand-name">Easy Check Eventos</div>
-          <div class="brand-tag">
-            Check-in inteligente com QR Code + busca por nome.
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <a class="chip" href="/dashboard">Dashboard</a>
-        <a class="chip" href="/protocolo">Protocolo</a>
-        <a class="chip" href="/admin">Admin</a>
-      </div>
-    </div>
-
-    <div class="home-split">
-
-      <div>
-        <h1>Organize o seu evento sem stress.</h1>
-
-        <p style="color:var(--muted); margin-top:10px;">
-          Gere QR Codes individuais, controle acompanhantes,
-          defina mesas com tema livre e acompanhe tudo em tempo real.
-        </p>
-
-        <div class="hero-actions">
-          <a class="btn" href="/protocolo">Abrir Protocolo</a>
-          <a class="btn btn-ghost" href="/dashboard">Ver Dashboard</a>
-        </div>
-
-        <div class="notice">
-          <b>Como funciona:</b><br>
-          1. Preenche no Google Sheets<br>
-          2. Exporta CSV<br>
-          3. Importa no Admin<br>
-          4. Distribui QR Codes aos convidados
-        </div>
-      </div>
-
-      <div>
-        <div class="mini-card">
-          <div class="mini-title">O sistema controla</div>
-          <ul class="mini-list">
-            <li>Mesa (tema livre: carros, cores, números, famílias)</li>
-            <li>Acompanhantes de 0 até 10</li>
-            <li>Total automático por convite</li>
-            <li>Bloqueio de entrada duplicada</li>
-          </ul>
-        </div>
-
-        <div class="mini-card" style="margin-top:15px;">
-          <div class="mini-title">Ideal para</div>
-          <ul class="mini-list">
-            <li>Casamentos</li>
-            <li>Eventos corporativos</li>
-            <li>Aniversários</li>
-            <li>Festas privadas</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
+  <div class="form-row">
+    <a class="btn" href="/protocolo">Abrir Protocolo</a>
+    <a class="btn btn-ghost" href="/dashboard">Ver Dashboard</a>
+    <a class="btn btn-ghost" href="/admin">Admin (PIN)</a>
   </div>
 </div>
-
-<div class="grid">
-
-  <div class="card">
-    <div class="pack-badge">BÁSICO</div>
-    <h2 class="pack-title">Check-in QR + Busca</h2>
-    <ul class="pack-list">
-      <li>QR Code individual</li>
-      <li>Busca por nome</li>
-      <li>Controle de entrada</li>
-      <li>Visual moderno</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <div class="pack-badge">PLUS</div>
-    <h2 class="pack-title">Importação CSV</h2>
-    <ul class="pack-list">
-      <li>Upload de lista em massa</li>
-      <li>Admin com senha</li>
-      <li>Dashboard com estatísticas</li>
-      <li>Controle total</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <div class="pack-badge">PREMIUM</div>
-    <h2 class="pack-title">Personalização</h2>
-    <ul class="pack-list">
-      <li>Layouts personalizados</li>
-      <li>Convites online</li>
-      <li>Design exclusivo</li>
-      <li>Suporte dedicado</li>
-    </ul>
-  </div>
-
-</div>
-
 {% endblock %}

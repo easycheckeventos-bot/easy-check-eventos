@@ -1,36 +1,25 @@
 {% extends "base.html" %}
+{% block title %}Admin{% endblock %}
 {% block content %}
-
-<div class="card">
-  <div class="topline">
-    <h2>Admin • Convidados</h2>
-    <div class="chips">
-      <a class="chip" href="/">Home</a>
-      <a class="chip" href="/dashboard">Dashboard</a>
-      <a class="chip" href="/protocolo">Protocolo</a>
-    </div>
+<div class="card section">
+  <div class="section-title">
+    <h2>Admin</h2>
+    <p class="hint">Importar CSV + baixar QRs</p>
   </div>
 
-  <h3 style="margin-top:14px;">Adicionar manual</h3>
-  <form method="POST" action="/admin/add" class="search" style="flex-wrap:wrap;">
-    <input class="input" name="nome" placeholder="Nome completo" style="min-width:260px;" required>
-    <input class="input" name="mesa" placeholder="Mesa (ex: Toyota, Mesa 1, Família Noiva...)" style="min-width:260px;" required>
-
-    <input class="input" type="number" min="0" max="10" name="acompanhantes" value="0"
-           placeholder="Acompanhantes (0-10)" style="max-width:220px;" required>
-
-    <button class="btn" type="submit">Adicionar</button>
+  <form class="form-row" method="POST" action="/admin/import-csv" enctype="multipart/form-data">
+    <input class="input" type="file" name="file" accept=".csv">
+    <button class="btn" type="submit">Importar CSV</button>
+    <a class="btn btn-ghost" href="/qr/zip">Baixar QRs (ZIP)</a>
+    <a class="btn btn-ghost" href="/admin/logout">Sair</a>
   </form>
 
-  <hr style="margin:18px 0; border:none; border-top:1px solid rgba(11,27,43,.10);">
-
-  <h3>Importar CSV</h3>
-  <p class="muted small">O CSV deve ter cabeçalho: <b>nome,mesa,acompanhantes</b> (acompanhantes = número 0–10).</p>
-
-  <form method="POST" action="/admin/import" enctype="multipart/form-data" class="search">
-    <input class="input" type="file" name="arquivo" accept=".csv" required>
-    <button class="btn" type="submit">Importar</button>
+  <form style="margin-top:12px;" method="POST" action="/admin/reset-entrada">
+    <button class="btn btn-danger" type="submit">Resetar todas entradas</button>
   </form>
+
+  <div style="margin-top:12px; color:var(--muted); font-weight:800;">
+    CSV esperado: colunas <b>nome</b>, <b>mesa</b>, <b>acompanhantes</b>
+  </div>
 </div>
-
 {% endblock %}

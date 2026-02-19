@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Admin Login{% endblock %}
+{% block content %}
+<div class="card section">
+  <div class="section-title">
+    <h2>Admin (PIN)</h2>
+    <p class="hint">Somente para quem vai importar convidados</p>
+  </div>
+
+  <form method="POST" class="form-row" action="/admin/login?next={{ next_url|urlencode }}">
+    <input class="input" name="pin" placeholder="Digite o PIN">
+    <button class="btn" type="submit">Entrar</button>
+  </form>
+</div>
+{% endblock %}

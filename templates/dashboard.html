@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-
 <div class="card section">
   <div class="section-title">
     <h2>Dashboard</h2>
@@ -9,23 +8,10 @@
   </div>
 
   <div class="kpis">
-    <div class="kpi">
-      <div class="label">Convites</div>
-      <div class="value">{{ stats.convites }}</div>
-    </div>
-    <div class="kpi">
-      <div class="label">Pessoas (Total)</div>
-      <div class="value">{{ stats.total_pessoas }}</div>
-    </div>
-    <div class="kpi">
-      <div class="label">Entraram</div>
-      <div class="value">{{ stats.entraram }}</div>
-    </div>
-    <div class="kpi">
-      <div class="label">Faltam</div>
-      <div class="value">{{ stats.faltam }}</div>
-    </div>
+    <div class="kpi"><div class="label">Convites</div><div class="value">{{ stats.convites }}</div></div>
+    <div class="kpi"><div class="label">Pessoas (Total)</div><div class="value">{{ stats.total_pessoas }}</div></div>
+    <div class="kpi"><div class="label">Entraram</div><div class="value">{{ stats.entraram }}</div></div>
+    <div class="kpi"><div class="label">Faltam</div><div class="value">{{ stats.faltam }}</div></div>
   </div>
 </div>
-
 {% endblock %}

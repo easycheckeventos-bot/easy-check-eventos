@@ -24,7 +24,7 @@ dados = [
 ]
 
 cursor.executemany(
-    "INSERT INTO convidados (nome, mesa, acompanhante, entrou) VALUES (?, ?, ?, ?)",
+    "INSERT INTO convidados (nome, mesa, acompanhantes, entrou) VALUES (?, ?, ?, ?)",
     dados
 )
 

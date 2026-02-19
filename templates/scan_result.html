@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resultado</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="screen-green">
+  <div class="screen">
+    {% if already %}
+      <div class="screen-badge">⚠️ JÁ TINHA ENTRADO</div>
+    {% else %}
+      <div class="screen-badge">ENTRADA CONFIRMADA ✅</div>
+    {% endif %}
+
+    <div class="screen-name">{{ c.nome }}</div>
+
+    <div class="screen-grid">
+      <div class="screen-box">
+        <div class="screen-label">Mesa</div>
+        <div class="screen-value">{{ c.mesa }}</div>
+      </div>
+      <div class="screen-box">
+        <div class="screen-label">Acompanhantes</div>
+        <div class="screen-value">{{ c.acompanhantes }}</div>
+      </div>
+      <div class="screen-box">
+        <div class="screen-label">Total</div>
+        <div class="screen-value">{{ c.total }}</div>
+      </div>
+    </div>
+
+    <div class="screen-id">Pode fechar esta página.</div>
+  </div>
+</body>
+</html>

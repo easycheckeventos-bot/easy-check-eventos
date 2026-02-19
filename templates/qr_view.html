@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}QR{% endblock %}
+{% block content %}
+<div class="card section">
+  <div class="section-title">
+    <h2>QR do convidado</h2>
+    <p class="hint">{{ c.nome }} — Mesa: {{ c.mesa }}</p>
+  </div>
+
+  <div style="display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start;">
+    <div>
+      <img src="/qr/{{ c.id }}.png" alt="QR" style="width:260px; height:260px; border-radius:16px; border:1px solid rgba(0,0,0,.12); background:#fff; padding:10px;">
+      <div style="margin-top:10px;">
+        <a class="btn" href="/qr/{{ c.id }}.png">Baixar PNG</a>
+      </div>
+    </div>
+
+    <div style="flex:1; min-width:240px;">
+      <div class="kpi" style="margin-bottom:10px;">
+        <div class="label">Acompanhantes</div>
+        <div class="value">{{ c.acompanhantes }}</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Total</div>
+        <div class="value">{{ c.total }}</div>
+      </div>
+      <div style="margin-top:12px;">
+        <a class="btn btn-ghost" href="/protocolo?q={{ c.nome|urlencode }}">Voltar ao Protocolo</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
