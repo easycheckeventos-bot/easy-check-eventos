@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, Response
 import os
 import csv
+import math
+import re
 from io import TextIOWrapper
 
 from db import get_conn, placeholder, init_db, is_postgres
@@ -67,37 +69,98 @@ def dashboard():
 # =========================
 # PROTOCOLO (busca por nome)
 # =========================
-@app.route("/protocolo", methods=["GET", "POST"])
+@app.route("/protocolo", methods=["GET"])
 def protocolo():
-    resultados = []
-    nome = ""
+    q = (request.args.get("q") or "").strip()
+    page = request.args.get("page") or "1"
+    try:
+        page = max(1, int(page))
+    except:
+        page = 1
 
-    if request.method == "POST":
-        nome = request.form.get("nome", "").strip()
+    PER_PAGE = 40
+    offset = (page - 1) * PER_PAGE
 
-        conn = get_conn()
-        cur = conn.cursor()
-        ph = placeholder()
+    # normaliza espaços na pesquisa
+    if q:
+        q = re.sub(r"\s+", " ", q)
 
+    conn = get_conn()
+    cur = conn.cursor()
+
+    # 1) contar total
+    if q:
         if is_postgres():
-            cur.execute(
-                f"SELECT id, nome, mesa, acompanhantes, entrou FROM convidados "
-                f"WHERE nome ILIKE {ph} ORDER BY nome ASC",
-                ('%' + nome + '%',)
-            )
+            cur.execute("SELECT COUNT(*) FROM convidados WHERE nome ILIKE %s", (f"%{q}%",))
         else:
-            cur.execute(
-                f"SELECT id, nome, mesa, acompanhantes, entrou FROM convidados "
-                f"WHERE nome LIKE {ph} ORDER BY nome ASC",
-                ('%' + nome + '%',)
-            )
+            cur.execute("SELECT COUNT(*) FROM convidados WHERE nome LIKE ?", (f"%{q}%",))
+    else:
+        cur.execute("SELECT COUNT(*) FROM convidados")
+    total = cur.fetchone()[0] or 0
 
-        resultados = cur.fetchall()
-        cur.close()
-        conn.close()
+    total_pages = max(1, math.ceil(total / PER_PAGE))
+    if page > total_pages:
+        page = total_pages
+        offset = (page - 1) * PER_PAGE
 
-    return render_template("protocolo.html", resultados=resultados, nome=nome)
+    # 2) buscar pagina atual (ordem A-Z)
+    if q:
+        if is_postgres():
+            cur.execute("""
+                SELECT id, nome, mesa, acompanhantes, entrou
+                FROM convidados
+                WHERE nome ILIKE %s
+                ORDER BY nome ASC
+                LIMIT %s OFFSET %s
+            """, (f"%{q}%", PER_PAGE, offset))
+        else:
+            cur.execute("""
+                SELECT id, nome, mesa, acompanhantes, entrou
+                FROM convidados
+                WHERE nome LIKE ?
+                ORDER BY nome ASC
+                LIMIT ? OFFSET ?
+            """, (f"%{q}%", PER_PAGE, offset))
+    else:
+        # sem filtro: A-Z também
+        if is_postgres():
+            cur.execute("""
+                SELECT id, nome, mesa, acompanhantes, entrou
+                FROM convidados
+                ORDER BY nome ASC
+                LIMIT %s OFFSET %s
+            """, (PER_PAGE, offset))
+        else:
+            cur.execute("""
+                SELECT id, nome, mesa, acompanhantes, entrou
+                FROM convidados
+                ORDER BY nome ASC
+                LIMIT ? OFFSET ?
+            """, (PER_PAGE, offset))
 
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    convidados = []
+    for r in rows:
+        convidados.append({
+            "id": r[0],
+            "nome": r[1],
+            "mesa": r[2],
+            "acompanhantes": int(r[3] or 0),
+            "entrou": r[4],
+        })
+
+    return render_template(
+        "protocolo.html",
+        convidados=convidados,
+        q=q,
+        page=page,
+        total_pages=total_pages,
+        total=total,
+        per_page=PER_PAGE
+    )
 # =========================
 # SCAN (QR)
 # =========================

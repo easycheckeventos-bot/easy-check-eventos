@@ -5,14 +5,45 @@
 <div class="card section">
   <div class="section-title">
     <h2>Protocolo</h2>
-    <p class="hint">Pesquisar por nome e marcar entrada</p>
+    <p class="hint">Pesquise por nome e marque entrada</p>
   </div>
 
-  <form class="form-row" method="GET">
-    <input class="input" name="q" placeholder="Pesquisar convidado..." value="{{ request.args.get('q','') }}">
+  <form class="form-row" method="GET" action="/protocolo">
+    <input class="input" type="text" name="q" placeholder="Ex: Nordine, Joana..." value="{{ q or '' }}">
     <button class="btn" type="submit">Procurar</button>
     <a class="btn btn-ghost" href="/protocolo">Limpar</a>
   </form>
+
+  <div style="margin-top:10px; color:var(--muted); font-size:12px; font-weight:800;">
+    Total: {{ total }} | Página {{ page }} de {{ total_pages }}
+  </div>
+
+  {% if total_pages > 1 %}
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
+    {% set start = page - 2 %}
+    {% set end = page + 2 %}
+    {% if start < 1 %}{% set start = 1 %}{% endif %}
+    {% if end > total_pages %}{% set end = total_pages %}{% endif %}
+
+    {% if page > 1 %}
+      <a class="pill" href="/protocolo?q={{ q|urlencode }}&page={{ page-1 }}">◀</a>
+    {% endif %}
+
+    {% for p in range(start, end+1) %}
+      {% if p == page %}
+        <span class="pill" style="background:rgba(10,108,214,.16); border-color:rgba(10,108,214,.35); font-weight:1000;">
+          {{ p }}
+        </span>
+      {% else %}
+        <a class="pill" href="/protocolo?q={{ q|urlencode }}&page={{ p }}">{{ p }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page < total_pages %}
+      <a class="pill" href="/protocolo?q={{ q|urlencode }}&page={{ page+1 }}">▶</a>
+    {% endif %}
+  </div>
+  {% endif %}
 
   <div class="table">
     <div class="row head">
@@ -42,6 +73,12 @@
       </div>
     </div>
     {% endfor %}
+
+    {% if convidados|length == 0 %}
+      <div style="padding:14px; color:var(--muted); font-weight:800;">
+        Nenhum resultado.
+      </div>
+    {% endif %}
   </div>
 </div>
 
