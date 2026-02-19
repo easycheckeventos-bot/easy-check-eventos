@@ -1,7 +1,10 @@
 import os, re, secrets, io, zipfile
 from flask import Flask, request, redirect, url_for, render_template, session, send_file, abort, flash
 
-from db import get_conn, ensure_schema, dict_cursor
+from db import get_conn, ensure_schema
+
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret")
@@ -26,7 +29,7 @@ def require_master():
 
 def get_event_by_slug(slug: str):
     conn = get_conn()
-    cur = dict_cursor(conn)
+    cur = conn.cursor()
     cur.execute("SELECT * FROM eventos WHERE slug=%s;", (slug,))
     ev = cur.fetchone()
     cur.close(); conn.close()
@@ -103,7 +106,7 @@ def panel():
         return redirect(url_for("panel"))
 
     conn = get_conn()
-    cur = dict_cursor(conn)
+    cur = conn.cursou()
     cur.execute("SELECT id, nome_evento, slug, created_at FROM eventos ORDER BY created_at DESC;")
     eventos = cur.fetchall()
     cur.close(); conn.close()
@@ -133,7 +136,7 @@ def protocolo(slug):
     offset = (page-1)*per_page
 
     conn = get_conn()
-    cur = dict_cursor(conn)
+    cur = conn.cursor()
 
     if q:
         cur.execute("""
@@ -179,7 +182,7 @@ def dashboard(slug):
         return "Evento não encontrado.", 404
 
     conn = get_conn()
-    cur = dict_cursor(conn)
+    cur = conn.cursor()
 
     cur.execute("SELECT COUNT(*) AS n FROM convidados WHERE evento_id=%s;", (ev["id"],))
     convites = cur.fetchone()["n"]
