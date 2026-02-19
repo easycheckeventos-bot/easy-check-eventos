@@ -1,17 +1,34 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="pt">
 <head>
-<meta charset="UTF-8">
-<title>Casamento de Nazimo & Joana</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Easy Check Eventos{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div class="card">
-<h1>Casamento de Nazimo & Joana</h1>
-</div>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <img class="logo" src="{{ url_for('static', filename='logo_ece.png') }}" alt="ECE">
+        <div>
+          <h1>Easy Check Eventos</h1>
+          <p>Check-in inteligente com QR + busca por nome</p>
+        </div>
+      </div>
 
-{% block content %}{% endblock %}
+      <div class="nav">
+        <a class="pill" href="/">Home</a>
+        <a class="pill" href="/protocolo">Protocolo</a>
+        <a class="pill" href="/dashboard">Dashboard</a>
+        <a class="pill" href="/admin">Admin</a>
+      </div>
+    </div>
+
+    {% block content %}{% endblock %}
+    <div class="spacer"></div>
+  </div>
 
 </body>
 </html>

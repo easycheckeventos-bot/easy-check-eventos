@@ -1,39 +1,29 @@
 {% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
 {% block content %}
 
-<div class="card">
-  <div class="topline">
+<div class="card section">
+  <div class="section-title">
     <h2>Dashboard</h2>
-    <div class="chips">
-      <a class="chip" href="/">Home</a>
-      <a class="chip" href="/protocolo">Protocolo</a>
-      <a class="chip" href="/admin">Admin</a>
-    </div>
+    <p class="hint">Resumo do evento</p>
   </div>
 
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-label">Convites</div>
-      <div class="stat-value">{{ stats.convites }}</div>
-      <div class="muted small">convidados principais</div>
+  <div class="kpis">
+    <div class="kpi">
+      <div class="label">Convites</div>
+      <div class="value">{{ stats.convites }}</div>
     </div>
-
-    <div class="stat">
-      <div class="stat-label">Pessoas (Total)</div>
-      <div class="stat-value">{{ stats.total_pessoas }}</div>
-      <div class="muted small">1 + acompanhantes</div>
+    <div class="kpi">
+      <div class="label">Pessoas (Total)</div>
+      <div class="value">{{ stats.total_pessoas }}</div>
     </div>
-
-    <div class="stat">
-      <div class="stat-label">Pessoas (Entraram)</div>
-      <div class="stat-value">{{ stats.entraram_pessoas }}</div>
-      <div class="muted small">confirmadas</div>
+    <div class="kpi">
+      <div class="label">Entraram</div>
+      <div class="value">{{ stats.entraram }}</div>
     </div>
-
-    <div class="stat">
-      <div class="stat-label">Pessoas (Faltam)</div>
-      <div class="stat-value">{{ stats.faltam_pessoas }}</div>
-      <div class="muted small">por chegar</div>
+    <div class="kpi">
+      <div class="label">Faltam</div>
+      <div class="value">{{ stats.faltam }}</div>
     </div>
   </div>
 </div>

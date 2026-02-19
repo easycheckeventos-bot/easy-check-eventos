@@ -1,60 +1,48 @@
 {% extends "base.html" %}
+{% block title %}Protocolo{% endblock %}
 {% block content %}
 
-<div class="card">
-  <div class="topline">
+<div class="card section">
+  <div class="section-title">
     <h2>Protocolo</h2>
-    <div class="chips">
-      <a class="chip" href="/">Home</a>
-      <a class="chip" href="/dashboard">Dashboard</a>
-      <a class="chip" href="/admin">Admin</a>
-    </div>
+    <p class="hint">Pesquisar por nome e marcar entrada</p>
   </div>
 
-  <form method="POST" class="search">
-    <input class="input" name="nome" placeholder="Pesquisar nome..." value="{{ nome }}">
+  <form class="form-row" method="GET">
+    <input class="input" name="q" placeholder="Pesquisar convidado..." value="{{ request.args.get('q','') }}">
     <button class="btn" type="submit">Procurar</button>
+    <a class="btn btn-ghost" href="/protocolo">Limpar</a>
   </form>
 
-  {% if resultados %}
-    <div class="table">
-      <div class="row head">
-        <div>ID</div>
-        <div>Nome</div>
-        <div>Mesa</div>
-        <div>Acomp.</div>
-        <div>Total</div>
-        <div>Status</div>
-        <div>Ação</div>
-      </div>
-
-      {% for c in resultados %}
-      {% set total = 1 + (c[3] or 0) %}
-      <div class="row">
-        <div>#{{ c[0] }}</div>
-        <div><a href="/scan/{{ c[0] }}" class="link">{{ c[1] }}</a></div>
-        <div>{{ c[2] }}</div>
-        <div>{{ c[3] }}</div>
-        <div><b>{{ total }}</b></div>
-        <div>
-          {% if c[4] == "Sim" %}
-            <span class="pill ok">Entrou</span>
-          {% else %}
-            <span class="pill no">Não entrou</span>
-          {% endif %}
-        </div>
-        <div>
-          {% if c[4] == "Sim" %}
-            <a class="btn btn-ghost" href="/resetar/{{ c[0] }}">Resetar</a>
-          {% else %}
-            <a class="btn" href="/entrar/{{ c[0] }}">Marcar entrada</a>
-          {% endif %}
-        </div>
-      </div>
-      {% endfor %}
+  <div class="table">
+    <div class="row head">
+      <div>ID</div><div>Nome</div><div>Mesa</div><div>Acomp.</div><div>Total</div><div>Status</div><div>Ação</div>
     </div>
-  {% elif nome %}
-    <p class="muted">Nenhum resultado para “{{ nome }}”.</p>
-  {% endif %}
+
+    {% for c in convidados %}
+    <div class="row">
+      <div class="muted">#{{ c.id }}</div>
+      <div><b>{{ c.nome }}</b></div>
+      <div>{{ c.mesa }}</div>
+      <div>{{ c.acompanhantes }}</div>
+      <div>{{ 1 + c.acompanhantes }}</div>
+      <div>
+        {% if c.entrou == "Sim" %}
+          <span class="badge badge-ok">Entrou</span>
+        {% else %}
+          <span class="badge badge-no">Não entrou</span>
+        {% endif %}
+      </div>
+      <div>
+        {% if c.entrou == "Sim" %}
+          <a class="btn btn-ghost" href="/reset/{{ c.id }}">Resetar</a>
+        {% else %}
+          <a class="btn btn-success" href="/entrar/{{ c.id }}">Marcar entrada</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
 {% endblock %}
