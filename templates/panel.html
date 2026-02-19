@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="topline">
+    <div>
+      <h2>Painel (Eventos)</h2>
+      <div class="muted small">Crie eventos e gere o link /e/slug</div>
+    </div>
+  </div>
+
+  <form method="post" style="margin-top:14px;">
+    <div class="search">
+      <input class="input" name="nome_evento" placeholder="Nome do evento (ex: Casamento Nazimo & Joana)" required>
+      <input class="input" name="slug" placeholder="Slug (opcional) ex: nazimo-joana">
+      <input class="input" name="pin_admin" placeholder="PIN do Admin do evento" required>
+      <button class="btn" type="submit">Criar</button>
+    </div>
+  </form>
+
+  <div class="table" style="margin-top:14px;">
+    <div class="row head">
+      <div>Evento</div><div>Slug</div><div>Link</div><div>Criado</div><div>Ações</div><div></div>
+    </div>
+    {% for e in eventos %}
+    <div class="row">
+      <div class="who"><div class="name">{{ e.nome_evento }}</div></div>
+      <div>{{ e.slug }}</div>
+      <div><a class="link" href="/e/{{ e.slug }}/protocolo" target="_blank">/e/{{ e.slug }}/protocolo</a></div>
+      <div class="small muted">{{ e.created_at }}</div>
+      <div><a class="chip" href="/e/{{ e.slug }}/admin-login" target="_blank">Admin</a></div>
+      <div></div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

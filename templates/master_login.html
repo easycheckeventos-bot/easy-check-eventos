@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Entrar no Painel</h2>
+  <p class="muted">Acesso restrito.</p>
+  <form method="post">
+    <input class="input" name="pin" placeholder="MASTER PIN" required>
+    <div style="margin-top:10px;">
+      <button class="btn" type="submit">Entrar</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

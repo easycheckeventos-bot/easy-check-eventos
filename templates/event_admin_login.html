@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Admin — {{ ev.nome_evento }}</h2>
+  <p class="muted">Digite o PIN do evento para entrar.</p>
+  <form method="post">
+    <input class="input" name="pin" placeholder="PIN do evento" required>
+    <div style="margin-top:10px;">
+      <button class="btn" type="submit">Entrar</button>
+      <a class="btn btn-ghost" href="/e/{{ ev.slug }}/protocolo">Voltar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
