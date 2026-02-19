@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="card hero-bg">
+<div class="hero-bg" style="background-image:url('{{ url_for('static', filename='hero-bg.png') }}');">
   <div class="hero-content">
 
     <div class="topline">
       <div class="brand">
-        <img src="{{ url_for('static', filename='logo_ece.png') }}" class="logo" alt="ECE">
+        <img src="{{ url_for('static', filename='logo_ece.png') }}" class="logo">
         <div>
           <div class="brand-name">Easy Check Eventos</div>
           <div class="brand-tag">
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="chips">
+      <div>
         <a class="chip" href="/dashboard">Dashboard</a>
         <a class="chip" href="/protocolo">Protocolo</a>
         <a class="chip" href="/admin">Admin</a>
@@ -23,12 +23,11 @@
     </div>
 
     <div class="home-split">
-      <div class="home-left">
-        <h1 style="margin-top:10px; font-size:38px;">
-          Organize o seu evento sem stress.
-        </h1>
 
-        <p class="muted" style="margin-top:10px; font-size:16px;">
+      <div>
+        <h1>Organize o seu evento sem stress.</h1>
+
+        <p style="color:var(--muted); margin-top:10px;">
           Gere QR Codes individuais, controle acompanhantes,
           defina mesas com tema livre e acompanhe tudo em tempo real.
         </p>
@@ -47,7 +46,7 @@
         </div>
       </div>
 
-      <div class="home-right">
+      <div>
         <div class="mini-card">
           <div class="mini-title">O sistema controla</div>
           <ul class="mini-list">
@@ -58,7 +57,7 @@
           </ul>
         </div>
 
-        <div class="mini-card">
+        <div class="mini-card" style="margin-top:15px;">
           <div class="mini-title">Ideal para</div>
           <ul class="mini-list">
             <li>Casamentos</li>
@@ -68,18 +67,16 @@
           </ul>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </div>
 
-<!-- Pacotes -->
 <div class="grid">
 
   <div class="card">
     <div class="pack-badge">BÁSICO</div>
     <h2 class="pack-title">Check-in QR + Busca</h2>
-    <p class="muted">Organização rápida e prática.</p>
     <ul class="pack-list">
       <li>QR Code individual</li>
       <li>Busca por nome</li>
@@ -91,7 +88,6 @@
   <div class="card">
     <div class="pack-badge">PLUS</div>
     <h2 class="pack-title">Importação CSV</h2>
-    <p class="muted">Para eventos maiores.</p>
     <ul class="pack-list">
       <li>Upload de lista em massa</li>
       <li>Admin com senha</li>
@@ -103,7 +99,6 @@
   <div class="card">
     <div class="pack-badge">PREMIUM</div>
     <h2 class="pack-title">Personalização</h2>
-    <p class="muted">Eventos exclusivos.</p>
     <ul class="pack-list">
       <li>Layouts personalizados</li>
       <li>Convites online</li>
