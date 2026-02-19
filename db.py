@@ -6,6 +6,10 @@ from psycopg2.extras import RealDictCursor
 def is_postgres():
     return os.environ.get("DATABASE_URL", "").startswith("postgres")
 
+def placeholder():
+    # SQLite usa "?" e Postgres (psycopg2) usa "%s"
+    return "%s" if is_postgres() else "?"
+
 def get_conn():
     url = os.environ.get("DATABASE_URL")
     if url and url.startswith("postgres"):
