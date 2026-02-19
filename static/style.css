@@ -174,7 +174,7 @@ a{ color: inherit; }
 }
 .row{
   display:grid;
-  grid-template-columns: 80px 2fr 1.2fr 90px 90px 130px 140px;
+  grid-template-columns: 70px 2fr 1.2fr 90px 90px 130px 170px;
   gap:10px;
   padding: 12px 12px;
   align-items:center;
@@ -234,4 +234,30 @@ a{ color: inherit; }
 }
 @media (max-width: 560px){
   .kpis{ grid-template-columns: 1fr; }
+}
+/* ===== Botões dentro da tabela ===== */
+.row > div:last-child{
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+}
+
+.row .btn{
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap; /* não quebrar texto */
+  min-width: 140px;    /* tamanho consistente */
+  text-align:center;
+}
+
+.row .btn-success{
+  background: linear-gradient(135deg, #1f9d74, #25b382);
+  box-shadow: 0 10px 20px rgba(31,157,116,.22);
+}
+
+.row .btn-ghost{
+  background: rgba(255,255,255,.70);
+  border: 1px solid rgba(11,27,43,.12);
 }
