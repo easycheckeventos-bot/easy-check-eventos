@@ -312,6 +312,36 @@ def resetdb():
 
     return "DB limpa ✅"
 
+@app.route("/admin/recreate-table")
+def recreate_table():
+    r = require_admin()
+    if r:
+        return r
+
+    if not is_postgres():
+        return "Este comando é só para Postgres (Render).", 400
+
+    conn = get_conn()
+    cur = conn.cursor()
+
+    cur.execute("DROP TABLE IF EXISTS convidados;")
+    cur.execute("""
+    CREATE TABLE convidados (
+        id SERIAL PRIMARY KEY,
+        nome TEXT NOT NULL,
+        mesa TEXT NOT NULL,
+        acompanhantes INT NOT NULL DEFAULT 0,
+        entrou TEXT NOT NULL DEFAULT 'Não'
+    );
+    """)
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return "Tabela recriada ✅ Agora reimporte o CSV."
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
