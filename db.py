@@ -1,44 +1,41 @@
 import os
 import sqlite3
-from urllib.parse import urlparse
-
-DATABASE_URL = os.environ.get("DATABASE_URL")  # Render Postgres
-SQLITE_PATH = os.environ.get("SQLITE_PATH", "easycheck.db")
-
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 def is_postgres():
-    return bool(DATABASE_URL and DATABASE_URL.startswith("postgres"))
-
-
-def placeholder():
-    return "%s" if is_postgres() else "?"
-
+    return os.environ.get("DATABASE_URL", "").startswith("postgres")
 
 def get_conn():
-    if is_postgres():
-        import psycopg2
-        return psycopg2.connect(DATABASE_URL)
-    else:
-        conn = sqlite3.connect(SQLITE_PATH)
-        return conn
-
+    url = os.environ.get("DATABASE_URL")
+    if url and url.startswith("postgres"):
+        return psycopg2.connect(url)
+    return sqlite3.connect("easycheck.db")
 
 def ensure_schema():
     conn = get_conn()
     cur = conn.cursor()
 
     if is_postgres():
+        # 1) cria tabela se não existir
         cur.execute("""
         CREATE TABLE IF NOT EXISTS convidados (
             id SERIAL PRIMARY KEY,
             nome TEXT NOT NULL,
             mesa TEXT NOT NULL,
             acompanhantes INT NOT NULL DEFAULT 0,
-            entrou TEXT NOT NULL DEFAULT 'Não',
-            token TEXT
+            entrou TEXT NOT NULL DEFAULT 'Não'
         );
         """)
+
+        # 2) MIGRAÇÕES: adiciona colunas se faltarem (não dá erro se já existir)
+        cur.execute("ALTER TABLE convidados ADD COLUMN IF NOT EXISTS token TEXT;")
+        cur.execute("ALTER TABLE convidados ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT NOW();")
+
+        # 3) índice único do token (só faz sentido depois da coluna existir)
         cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_convidados_token ON convidados(token);")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_convidados_nome ON convidados(nome);")
+
     else:
         # SQLite
         cur.execute("""
@@ -51,10 +48,8 @@ def ensure_schema():
             token TEXT
         );
         """)
-        try:
-            cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_convidados_token ON convidados(token);")
-        except:
-            pass
+        cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_convidados_token ON convidados(token);")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_convidados_nome ON convidados(nome);")
 
     conn.commit()
     cur.close()
