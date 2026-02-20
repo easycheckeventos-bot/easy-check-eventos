@@ -1,25 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Admin{% endblock %}
 {% block content %}
-<div class="card section">
-  <div class="section-title">
-    <h2>Admin</h2>
-    <p class="hint">Importar CSV + baixar QRs</p>
-  </div>
+<div class="card">
+  <h2>Admin — {{ ev.nome_evento }}</h2>
+  <p class="muted">Aqui vamos colocar: import CSV, gerar QR e baixar ZIP (por evento).</p>
 
-  <form class="form-row" method="POST" action="/admin/import-csv" enctype="multipart/form-data">
-    <input class="input" type="file" name="file" accept=".csv">
-    <button class="btn" type="submit">Importar CSV</button>
-    <a class="btn btn-ghost" href="/qr/zip">Baixar QRs (ZIP)</a>
-    <a class="btn btn-ghost" href="/admin/logout">Sair</a>
-  </form>
-
-  <form style="margin-top:12px;" method="POST" action="/admin/reset-entrada">
-    <button class="btn btn-danger" type="submit">Resetar todas entradas</button>
-  </form>
-
-  <div style="margin-top:12px; color:var(--muted); font-weight:800;">
-    CSV esperado: colunas <b>nome</b>, <b>mesa</b>, <b>acompanhantes</b>
+  <div class="hero-actions">
+    <a class="btn btn-ghost" href="/e/{{ ev.slug }}/protocolo">Protocolo</a>
+    <a class="btn btn-ghost" href="/e/{{ ev.slug }}/dashboard">Dashboard</a>
   </div>
 </div>
 {% endblock %}
